@@ -1,11 +1,12 @@
 package ru.sberbank.lesson12.task.alarmclock.presentation.viewmodel;
 
 import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
-import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import ru.sberbank.lesson12.task.alarmclock.data.repository.AlarmClockRepositoryImpl;
 import ru.sberbank.lesson12.task.alarmclock.data.repository.dao.AlarmClockDao;
 import ru.sberbank.lesson12.task.alarmclock.data.repository.database.AlarmClockDatabase;
@@ -14,8 +15,8 @@ import ru.sberbank.lesson12.task.alarmclock.domain.interactor.usecase.GetAllAlar
 import ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem;
 import ru.sberbank.lesson12.task.alarmclock.domain.repository.AlarmClockRepository;
 
-public class AlarmClockViewModel extends AndroidViewModel implements Callback<List<AlarmClockItem>> {
-    private List<AlarmClockItem> clocks;
+public class AlarmClockViewModel extends AndroidViewModel implements Callback<LiveData<List<AlarmClockItem>>> {
+    private LiveData<List<AlarmClockItem>> clocks;
 
     public AlarmClockViewModel(@NonNull Application application) {
         super(application);
@@ -29,12 +30,12 @@ public class AlarmClockViewModel extends AndroidViewModel implements Callback<Li
         allImagesInteractor.execute();*/
     }
 
-    public List<AlarmClockItem> getClocks() {
+    public LiveData<List<AlarmClockItem>> getClocks() {
         return clocks;
     }
 
     @Override
-    public void handle(List<AlarmClockItem> clocks) {
+    public void handle(LiveData<List<AlarmClockItem>> clocks) {
         this.clocks  = clocks;
     }
 }

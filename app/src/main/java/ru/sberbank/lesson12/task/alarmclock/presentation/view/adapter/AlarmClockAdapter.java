@@ -1,34 +1,28 @@
 package ru.sberbank.lesson12.task.alarmclock.presentation.view.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.sberbank.lesson12.task.alarmclock.R;
+import ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem;
 
 public class AlarmClockAdapter extends RecyclerView.Adapter<AlarmClockAdapter.AlarmClockViewHolder> {
 
     private final LayoutInflater inflater;
-    private List<String> clocks = Collections.emptyList();
+    private List<AlarmClockItem> clocks = Collections.emptyList();
     private Context context;
 
     public static class AlarmClockViewHolder extends RecyclerView.ViewHolder {
-        /*@BindView(R.id.image) ImageView image;
-        String url;*/
+        @BindView(R.id.time) TextView time;
         AlarmClockViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
@@ -49,7 +43,7 @@ public class AlarmClockAdapter extends RecyclerView.Adapter<AlarmClockAdapter.Al
     @Override
     public AlarmClockViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
-        View view = inflater.inflate(R.layout.image_layout, parent, false);
+        View view = inflater.inflate(R.layout.alarm_clock_item_layout, parent, false);
         /*DisplayMetrics metrics = new DisplayMetrics();
         ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(metrics);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(metrics.widthPixels / 3, metrics.widthPixels / 3);
@@ -59,11 +53,11 @@ public class AlarmClockAdapter extends RecyclerView.Adapter<AlarmClockAdapter.Al
 
     @Override
     public void onBindViewHolder(AlarmClockViewHolder holder, int position) {
-        /*String url = clocks.get(position);
-        holder.url = url;*/
+        AlarmClockItem item = clocks.get(position);
+        holder.time.setText(item.getTime());
     }
 
-    public void setClocks(List<String> clocks) {
+    public void setClocks(List<AlarmClockItem> clocks) {
         this.clocks = clocks;
     }
 
