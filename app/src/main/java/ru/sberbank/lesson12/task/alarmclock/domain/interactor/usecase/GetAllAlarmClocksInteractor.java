@@ -4,13 +4,14 @@ import java.util.List;
 
 import ru.sberbank.lesson12.task.alarmclock.domain.interactor.Callback;
 import ru.sberbank.lesson12.task.alarmclock.domain.interactor.Interactor;
+import ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem;
 import ru.sberbank.lesson12.task.alarmclock.domain.repository.AlarmClockRepository;
 
-public class GelAllImagesInteractor implements Interactor {
+public class GetAllAlarmClocksInteractor implements Interactor {
     private AlarmClockRepository repository;
-    private Callback<List<String>> callback;
+    private Callback<List<AlarmClockItem>> callback;
 
-    public GelAllImagesInteractor(AlarmClockRepository repository, Callback<List<String>> callback) {
+    public GetAllAlarmClocksInteractor(AlarmClockRepository repository, Callback<List<AlarmClockItem>> callback) {
         this.repository = repository;
         this.callback = callback;
     }

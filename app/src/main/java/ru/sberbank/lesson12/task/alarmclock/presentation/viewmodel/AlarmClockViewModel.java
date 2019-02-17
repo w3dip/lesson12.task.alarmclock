@@ -6,24 +6,35 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import ru.sberbank.lesson12.task.alarmclock.data.repository.AlarmClockRepositoryImpl;
+import ru.sberbank.lesson12.task.alarmclock.data.repository.dao.AlarmClockDao;
+import ru.sberbank.lesson12.task.alarmclock.data.repository.database.AlarmClockDatabase;
 import ru.sberbank.lesson12.task.alarmclock.domain.interactor.Callback;
+import ru.sberbank.lesson12.task.alarmclock.domain.interactor.usecase.GetAllAlarmClocksInteractor;
+import ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem;
+import ru.sberbank.lesson12.task.alarmclock.domain.repository.AlarmClockRepository;
 
-public class AlarmClockViewModel extends AndroidViewModel implements Callback<List<String>> {
-    private List<String> clocks;
+public class AlarmClockViewModel extends AndroidViewModel implements Callback<List<AlarmClockItem>> {
+    private List<AlarmClockItem> clocks;
 
     public AlarmClockViewModel(@NonNull Application application) {
         super(application);
+        AlarmClockDao dao = AlarmClockDatabase.getDatabase(application).alarmClockDao();
+        AlarmClockRepository repository = new AlarmClockRepositoryImpl(dao);
+
+        GetAllAlarmClocksInteractor interactor = new GetAllAlarmClocksInteractor(repository, this);
+        interactor.execute();
         /*AlarmClockRepository repository = new AlarmClockRepositoryImpl(application.getApplicationContext());
-        GelAllImagesInteractor allImagesInteractor = new GelAllImagesInteractor(repository, this);
+        GetAllAlarmClocksInteractor allImagesInteractor = new GetAllAlarmClocksInteractor(repository, this);
         allImagesInteractor.execute();*/
     }
 
-    public List<String> getClocks() {
+    public List<AlarmClockItem> getClocks() {
         return clocks;
     }
 
     @Override
-    public void handle(List<String> images) {
-        this.clocks = images;
+    public void handle(List<AlarmClockItem> clocks) {
+        this.clocks  = clocks;
     }
 }
