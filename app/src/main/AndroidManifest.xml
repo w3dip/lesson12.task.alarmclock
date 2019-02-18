@@ -12,9 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".presentation.view.activity.PlayAlarmClockActivity"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar"></activity>
+        <activity
             android:name=".presentation.view.activity.CreateAlarmClockActivity"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.MaterialComponents.NoActionBar"></activity>
         <activity
             android:name=".presentation.view.activity.MainActivity"
             android:theme="@style/Theme.MaterialComponents.NoActionBar">

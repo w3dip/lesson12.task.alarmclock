@@ -55,6 +55,9 @@ dependencies {
     //Material Design
     implementation 'com.google.android.material:material:1.0.0'
 
+    //Work Manager
+    implementation "android.arch.work:work-runtime:1.0.0-rc01"
+
     //tests
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0'
