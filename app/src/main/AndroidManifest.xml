@@ -12,12 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".presentation.view.activity.PlayAlarmClockActivity"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar"></activity>
-        <activity
-            android:name=".presentation.view.activity.CreateAlarmClockActivity"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar"></activity>
-        <activity
             android:name=".presentation.view.activity.MainActivity"
             android:theme="@style/Theme.MaterialComponents.NoActionBar">
             <intent-filter>
@@ -26,6 +20,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".presentation.view.activity.CreateAlarmClockActivity"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar"></activity>
+        <activity
+            android:name=".presentation.view.activity.PlayAlarmClockActivity"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar"
+            android:parentActivityName=".presentation.view.activity.MainActivity"
+            android:launchMode="singleInstance"></activity>
     </application>
 
 </manifest>

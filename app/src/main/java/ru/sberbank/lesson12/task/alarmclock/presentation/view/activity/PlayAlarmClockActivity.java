@@ -1,5 +1,10 @@
 package ru.sberbank.lesson12.task.alarmclock.presentation.view.activity;
 
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.view.MotionEvent;
+import android.widget.ImageView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
@@ -7,12 +12,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.sberbank.lesson12.task.alarmclock.R;
 import ru.sberbank.lesson12.task.alarmclock.domain.util.AudioPlayer;
-
-import android.graphics.drawable.Animatable;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.view.MotionEvent;
-import android.widget.ImageView;
 
 public class PlayAlarmClockActivity extends AppCompatActivity {
     @BindView(R.id.clockImageView)
@@ -35,7 +34,7 @@ public class PlayAlarmClockActivity extends AppCompatActivity {
         });
         animatedVectorDrawable.start();
         player = new AudioPlayer();
-        player.play(getApplicationContext(), R.raw.music);
+        player.play(this, R.raw.music);
     }
 
     @Override
@@ -43,5 +42,11 @@ public class PlayAlarmClockActivity extends AppCompatActivity {
         player.stop();
         finish();
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        player.stop();
+        super.onBackPressed();
     }
 }

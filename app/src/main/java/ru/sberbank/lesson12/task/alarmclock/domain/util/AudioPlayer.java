@@ -1,5 +1,6 @@
 package ru.sberbank.lesson12.task.alarmclock.domain.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.media.MediaPlayer;
 
@@ -14,14 +15,15 @@ public class AudioPlayer {
         }
     }
 
-    public void play(Context c, int rid) {
+    public void play(Context context, int rid) {
         stop();
 
-        mMediaPlayer = MediaPlayer.create(c, rid);
+        mMediaPlayer = MediaPlayer.create(context, rid);
         mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
                 stop();
+                ((Activity)context).finish();
             }
         });
 
