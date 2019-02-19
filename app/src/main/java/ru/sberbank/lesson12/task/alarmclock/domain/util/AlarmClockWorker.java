@@ -42,8 +42,9 @@ public class AlarmClockWorker extends Worker {
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_notification))
                 .setContentTitle(context.getResources().getString(R.string.notification_title))
                 .setContentText(context.getResources().getString(R.string.notification_message))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(PendingIntent.getActivity(context, 0, intent, 0))
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setContentIntent(PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT))
                 .setAutoCancel(true);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);

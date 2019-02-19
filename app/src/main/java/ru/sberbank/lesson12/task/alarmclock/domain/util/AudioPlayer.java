@@ -6,28 +6,37 @@ import android.media.MediaPlayer;
 
 public class AudioPlayer {
 
-    private MediaPlayer mMediaPlayer;
+    private MediaPlayer mediaPlayer;
 
     public void stop() {
-        if (mMediaPlayer != null) {
-            mMediaPlayer.release();
-            mMediaPlayer = null;
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
         }
     }
 
     public void play(Context context, int rid) {
         stop();
 
-        mMediaPlayer = MediaPlayer.create(context, rid);
-        mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        int maxCount = 3;
+        mediaPlayer = MediaPlayer.create(context, rid);
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            int count = 1;
+
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-                stop();
-                ((Activity)context).finish();
+                if(count < maxCount) {
+                    count++;
+                    mediaPlayer.seekTo(0);
+                    mediaPlayer.start();
+                } else {
+                    stop();
+                    ((Activity) context).finish();
+                }
             }
         });
 
-        mMediaPlayer.start();
+        mediaPlayer.start();
     }
 
 }
