@@ -16,8 +16,9 @@ public class AlarmClockEntityToItemMapper implements Mapper<List<AlarmClockEntit
             return Collections.emptyList();
         }
         return FluentIterable.from(source)
-                .transform(item -> AlarmClockItem.builder()
-                        .time(item.getTime())
+                .transform(entity -> AlarmClockItem.builder()
+                        .id(entity.getId())
+                        .time(entity.getTime())
                         .build())
                 .toList();
 

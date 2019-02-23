@@ -38,6 +38,11 @@ public class AlarmClockRepositoryImpl implements AlarmClockRepository {
         new CreateAlarmAsyncTask().execute(alarmClockItemToEntityMapper.map(item));
     }
 
+    @Override
+    public void delete(AlarmClockItem item) {
+        new DeleteAlarmAsyncTask().execute(alarmClockItemToEntityMapper.map(item));
+    }
+
     private static class LoadFromDbAsyncTask extends AsyncTask<Void, Void, LiveData<List<AlarmClockEntity>>> {
         @Override
         protected LiveData<List<AlarmClockEntity>> doInBackground(Void... voids) {
@@ -53,8 +58,17 @@ public class AlarmClockRepositoryImpl implements AlarmClockRepository {
     private static class CreateAlarmAsyncTask extends AsyncTask<AlarmClockEntity, Void, Void> {
 
         @Override
-        protected Void doInBackground(AlarmClockEntity... alarmClockItems) {
-            dao.insertAll(alarmClockItems);
+        protected Void doInBackground(AlarmClockEntity... alarmClockEntities) {
+            dao.insertAll(alarmClockEntities);
+            return null;
+        }
+    }
+
+    private static class DeleteAlarmAsyncTask extends AsyncTask<AlarmClockEntity, Void, Void> {
+
+        @Override
+        protected Void doInBackground(AlarmClockEntity... alarmClockEntities) {
+            dao.delete(alarmClockEntities[0]);
             return null;
         }
     }

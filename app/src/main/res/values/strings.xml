@@ -3,4 +3,6 @@
     <string name="empty_text">There is no value</string>
     <string name="notification_title">Alarm Clock</string>
     <string name="notification_message">Alarm Clock is triggered</string>
+    <string name="alarm_clock_delete_title">Delete alarm clock</string>
+    <string name="alarm_clock_delete_message">Are you sure you want delete this alarm clock?</string>
 </resources>

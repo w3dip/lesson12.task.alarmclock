@@ -8,4 +8,5 @@ import ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem;
 public interface AlarmClockRepository {
     LiveData<List<AlarmClockItem>> getAll();
     void create(AlarmClockItem item);
+    void delete(AlarmClockItem item);
 }

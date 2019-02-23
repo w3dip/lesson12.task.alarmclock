@@ -10,6 +10,10 @@ public class AlarmClockItemToEntityMapper implements Mapper<AlarmClockItem, Alar
 
     @Override
     public AlarmClockEntity map(AlarmClockItem from) {
-        return AlarmClockEntity.builder().time(from.getTime()).build();
+        return AlarmClockEntity
+                .builder()
+                .id(from.getId())
+                .time(from.getTime())
+                .build();
     }
 }
