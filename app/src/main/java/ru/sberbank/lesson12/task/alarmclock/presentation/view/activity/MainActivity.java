@@ -1,29 +1,27 @@
 package ru.sberbank.lesson12.task.alarmclock.presentation.view.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.work.WorkManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.sberbank.lesson12.task.alarmclock.R;
+import ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem;
 import ru.sberbank.lesson12.task.alarmclock.presentation.view.adapter.AlarmClockAdapter;
 import ru.sberbank.lesson12.task.alarmclock.presentation.view.fragment.TimePickerFragment;
 import ru.sberbank.lesson12.task.alarmclock.presentation.viewmodel.AlarmClockViewModel;
 
-import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
+import static ru.sberbank.lesson12.task.alarmclock.domain.interactor.usecase.CreateAlarmClockInteractor.NOTIFICATION_WORK_TAG;
 import static ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem.ALARM_CLOCK_TAG;
+import static ru.sberbank.lesson12.task.alarmclock.domain.util.AlarmClockSheduler.shedule;
 
 public class MainActivity extends AppCompatActivity {
-    public static final int NEW_ALARM_CLOCK_ACTIVITY_REQUEST_CODE = 1;
-    public static final int EDIT_ALARM_CLOCK_ACTIVITY_REQUEST_CODE = 2;
-
     @BindView(R.id.alarm_clocks)
     RecyclerView recyclerAlarmClocks;
 
@@ -36,9 +34,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        if (savedInstanceState == null) {
+            WorkManager.getInstance().cancelAllWorkByTag(NOTIFICATION_WORK_TAG);
+        }
+
         createAlarmClockBtn.setOnClickListener(v -> {
-            //startActivityForResult(new Intent(this, CreateAlarmClockActivity.class), NEW_ALARM_CLOCK_ACTIVITY_REQUEST_CODE);
-            //startActivity(new Intent(this, CreateAlarmClockActivity.class));
             new TimePickerFragment().show(getSupportFragmentManager(), ALARM_CLOCK_TAG);
         });
 
@@ -48,17 +48,12 @@ public class MainActivity extends AppCompatActivity {
             adapter.setClocks(alarmClockItems);
             recyclerAlarmClocks.setAdapter(adapter);
             recyclerAlarmClocks.setLayoutManager(new LinearLayoutManager(this));
+
+            if (savedInstanceState == null) {
+                for (AlarmClockItem item : alarmClockItems) {
+                    shedule(item);
+                }
+            }
         });
     }
-
-    /*@Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK) {
-            if (requestCode == NEW_ALARM_CLOCK_ACTIVITY_REQUEST_CODE) {
-                //
-            }
-        }
-    }*/
 }

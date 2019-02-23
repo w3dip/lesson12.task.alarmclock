@@ -37,7 +37,6 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         repository = new AlarmClockRepositoryImpl(dao);
         Bundle args = getArguments();
         if (args != null ) {
-            //String value = args.getString(ALARM_CLOCK_ITEM);
             value = (AlarmClockItem)args.getSerializable(ALARM_CLOCK_ITEM);
             if (value != null) {
                 LocalTime time = formatter.parseDateTime(value.getTime()).toLocalTime();

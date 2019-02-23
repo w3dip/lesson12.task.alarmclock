@@ -25,9 +25,6 @@ public class AlarmClockViewModel extends AndroidViewModel implements Callback<Li
 
         GetAllAlarmClocksInteractor interactor = new GetAllAlarmClocksInteractor(repository, this);
         interactor.execute();
-        /*AlarmClockRepository repository = new AlarmClockRepositoryImpl(application.getApplicationContext());
-        GetAllAlarmClocksInteractor allImagesInteractor = new GetAllAlarmClocksInteractor(repository, this);
-        allImagesInteractor.execute();*/
     }
 
     public LiveData<List<AlarmClockItem>> getClocks() {

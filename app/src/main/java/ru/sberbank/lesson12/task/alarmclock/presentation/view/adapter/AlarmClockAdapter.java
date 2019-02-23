@@ -2,9 +2,7 @@ package ru.sberbank.lesson12.task.alarmclock.presentation.view.adapter;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -22,14 +20,13 @@ import ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem;
 import ru.sberbank.lesson12.task.alarmclock.presentation.view.fragment.DeleteAlarmClockFragment;
 import ru.sberbank.lesson12.task.alarmclock.presentation.view.fragment.TimePickerFragment;
 
-import static ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem.ALARM_CLOCK_TAG;
 import static ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem.ALARM_CLOCK_ITEM;
+import static ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem.ALARM_CLOCK_TAG;
 
 public class AlarmClockAdapter extends RecyclerView.Adapter<AlarmClockAdapter.AlarmClockViewHolder> {
 
     private final LayoutInflater inflater;
     private List<AlarmClockItem> clocks = Collections.emptyList();
-    private Context context;
 
     public static class AlarmClockViewHolder extends RecyclerView.ViewHolder {
         AlarmClockItem item;
@@ -42,7 +39,6 @@ public class AlarmClockAdapter extends RecyclerView.Adapter<AlarmClockAdapter.Al
                 DialogFragment newFragment = new TimePickerFragment();
                 Bundle args = new Bundle();
                 args.putSerializable(ALARM_CLOCK_ITEM, item);
-                //args.putString(ALARM_CLOCK_ITEM, time.getText().toString());
                 newFragment.setArguments(args);
                 newFragment.show(((FragmentActivity)v.getContext()).getSupportFragmentManager(), ALARM_CLOCK_TAG);
             });
@@ -59,17 +55,12 @@ public class AlarmClockAdapter extends RecyclerView.Adapter<AlarmClockAdapter.Al
 
     public AlarmClockAdapter(Context context) {
         inflater = LayoutInflater.from(context);
-        this.context = context;
     }
 
     @Override
     public AlarmClockViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
         View view = inflater.inflate(R.layout.alarm_clock_item_layout, parent, false);
-        /*DisplayMetrics metrics = new DisplayMetrics();
-        ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(metrics.widthPixels / 3, metrics.widthPixels / 3);
-        view.setLayoutParams(layoutParams);*/
         return new AlarmClockViewHolder(view);
     }
 

@@ -16,12 +16,6 @@ public class AlarmClockEntity {
     @Ignore
     public static final String TABLE_NAME = "alarm_clocks";
 
-    /*@Ignore
-    public static final String COLUMN_DATE = "date";*/
-
-    /*@Ignore
-    public static final String FORECAST_DATE = "ru.sberbank.lesson9.task.network.domain.entity.FORECAST_DATE";*/
-
     @PrimaryKey
     @NonNull
     private Long id;

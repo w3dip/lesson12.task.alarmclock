@@ -33,8 +33,11 @@ public class PlayAlarmClockActivity extends AppCompatActivity {
             }
         });
         animatedVectorDrawable.start();
-        player = new AudioPlayer();
-        player.play(this, R.raw.music);
+
+        if (savedInstanceState == null) {
+            player = new AudioPlayer();
+            player.play(this, R.raw.music);
+        }
     }
 
     @Override

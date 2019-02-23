@@ -1,7 +1,6 @@
 package ru.sberbank.lesson12.task.alarmclock.presentation.view.fragment;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
