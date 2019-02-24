@@ -11,6 +11,7 @@ public class AlarmClockItemToEntityMapper implements Mapper<AlarmClockItem, Alar
                 .builder()
                 .id(from.getId())
                 .time(from.getTime())
+                .workId(from.getWorkId())
                 .build();
     }
 }

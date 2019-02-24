@@ -14,10 +14,13 @@ import java.util.Calendar;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.LiveData;
 import ru.sberbank.lesson12.task.alarmclock.data.repository.AlarmClockRepositoryImpl;
 import ru.sberbank.lesson12.task.alarmclock.data.repository.dao.AlarmClockDao;
 import ru.sberbank.lesson12.task.alarmclock.data.repository.database.AlarmClockDatabase;
+import ru.sberbank.lesson12.task.alarmclock.domain.interactor.Callback;
 import ru.sberbank.lesson12.task.alarmclock.domain.interactor.usecase.CreateAlarmClockInteractor;
+import ru.sberbank.lesson12.task.alarmclock.domain.interactor.usecase.SheduleAlarmClockInteractor;
 import ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem;
 import ru.sberbank.lesson12.task.alarmclock.domain.repository.AlarmClockRepository;
 
@@ -25,7 +28,7 @@ import static java.util.Calendar.HOUR_OF_DAY;
 import static java.util.Calendar.MINUTE;
 import static ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem.ALARM_CLOCK_ITEM;
 
-public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
+public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener, Callback<LiveData<Long>> {
     private static final DateTimeFormatter formatter = DateTimeFormat.forPattern("HH:mm");
     private AlarmClockRepository repository;
     private AlarmClockItem value = AlarmClockItem.builder().build();
@@ -56,6 +59,14 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         c.set(HOUR_OF_DAY, hourOfDay);
         c.set(MINUTE, minute);
         value.setTime(formatter.print(c.getTimeInMillis()));
-        new CreateAlarmClockInteractor(repository, value).execute();
+        new CreateAlarmClockInteractor(repository, value, this).execute();
+    }
+
+    @Override
+    public void handle(LiveData<Long> data) {
+        data.observe(this, id -> {
+            value.setId(id);
+            new SheduleAlarmClockInteractor(repository, value).execute();
+        });
     }
 }

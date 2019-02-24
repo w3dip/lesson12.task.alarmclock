@@ -16,13 +16,18 @@ public class AlarmClockEntity {
     @Ignore
     public static final String TABLE_NAME = "alarm_clocks";
 
+    @Ignore
+    public static final String COLUMN_ID = "id";
+
     @PrimaryKey
     @NonNull
     private Long id;
     private String time;
+    private String workId;
 
-    public AlarmClockEntity(@NonNull Long id, String time) {
+    public AlarmClockEntity(@NonNull Long id, String time, String workId) {
         this.id = id;
         this.time = time;
+        this.workId = workId;
     }
 }

@@ -4,10 +4,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.work.Data;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 import ru.sberbank.lesson12.task.alarmclock.R;
@@ -16,6 +18,7 @@ import ru.sberbank.lesson12.task.alarmclock.presentation.view.activity.PlayAlarm
 import static android.content.Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static androidx.work.ListenableWorker.Result.success;
+import static ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem.ALARM_CLOCK_ITEM_ID;
 
 public class AlarmClockWorker extends Worker {
     private static final String CHANNEL_ID = "ALARM_CLOCK_CHANNEL";
@@ -61,6 +64,7 @@ public class AlarmClockWorker extends Worker {
         intent.addFlags(FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY);
         intent.setAction(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.putExtra(ALARM_CLOCK_ITEM_ID, getInputData().getLong(ALARM_CLOCK_ITEM_ID, 0));
         return intent;
     }
 }

@@ -1,29 +1,29 @@
 package ru.sberbank.lesson12.task.alarmclock.domain.interactor.usecase;
 
+import java.util.List;
+
 import androidx.lifecycle.LiveData;
 import ru.sberbank.lesson12.task.alarmclock.domain.interactor.Callback;
 import ru.sberbank.lesson12.task.alarmclock.domain.interactor.Interactor;
 import ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem;
 import ru.sberbank.lesson12.task.alarmclock.domain.repository.AlarmClockRepository;
 
-import static ru.sberbank.lesson12.task.alarmclock.domain.util.AlarmClockSheduler.shedule;
-
-public class CreateAlarmClockInteractor implements Interactor {
-    public static final String NOTIFICATION_WORK_TAG = "notificationWork";
-
+public class GetByIdAlarmClocksInteractor implements Interactor {
     private AlarmClockRepository repository;
-    private AlarmClockItem item;
-    private Callback<LiveData<Long>> callback;
+    private Callback<LiveData<AlarmClockItem>> callback;
+    private long id;
 
-    public CreateAlarmClockInteractor(AlarmClockRepository repository, AlarmClockItem item, Callback<LiveData<Long>> callback) {
+    public GetByIdAlarmClocksInteractor(AlarmClockRepository repository, Callback<LiveData<AlarmClockItem>> callback) {
         this.repository = repository;
-        this.item = item;
         this.callback = callback;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Override
     public void execute() {
-        //shedule(item);
-        callback.handle(repository.create(item));
+        callback.handle(repository.getById(id));
     }
 }

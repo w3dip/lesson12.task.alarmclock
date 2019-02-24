@@ -8,9 +8,11 @@ import lombok.Data;
 @Data
 @Builder
 public class AlarmClockItem implements Serializable {
+    public static final String ALARM_CLOCK_ITEM_ID = "id";
     public static final String ALARM_CLOCK_ITEM = "alarmClockItem";
     public static final String ALARM_CLOCK_TAG = "timePicker";
 
     private Long id;
     private String time;
+    private String workId;
 }

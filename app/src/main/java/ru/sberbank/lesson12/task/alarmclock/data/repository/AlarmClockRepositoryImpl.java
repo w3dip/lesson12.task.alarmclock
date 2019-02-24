@@ -2,6 +2,8 @@ package ru.sberbank.lesson12.task.alarmclock.data.repository;
 
 import android.os.AsyncTask;
 
+import com.google.common.collect.Lists;
+
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
@@ -22,6 +24,8 @@ public class AlarmClockRepositoryImpl implements AlarmClockRepository {
     private static AlarmClockDao dao;
 
     private static final MediatorLiveData<List<AlarmClockEntity>> result = new MediatorLiveData<>();
+    private static final MediatorLiveData<Long> resultCreate = new MediatorLiveData<>();
+    private static final MediatorLiveData<AlarmClockEntity> resultById = new MediatorLiveData<>();
 
     public AlarmClockRepositoryImpl(AlarmClockDao dao) {
         AlarmClockRepositoryImpl.dao = dao;
@@ -34,8 +38,16 @@ public class AlarmClockRepositoryImpl implements AlarmClockRepository {
     }
 
     @Override
-    public void create(AlarmClockItem item) {
+    public LiveData<AlarmClockItem> getById(long id) {
+        new LoadFromDbByIdAsyncTask().execute(id);
+        return Transformations.map(result, input -> alarmClockEntityToItemMapper.map(Lists.newArrayList(input)).get(0));
+    }
+
+    @Override
+    public LiveData<Long> create(AlarmClockItem item) {
         new CreateAlarmAsyncTask().execute(alarmClockItemToEntityMapper.map(item));
+        //return resultCreate.getValue();
+        return resultCreate;
     }
 
     @Override
@@ -55,12 +67,30 @@ public class AlarmClockRepositoryImpl implements AlarmClockRepository {
         }
     }
 
-    private static class CreateAlarmAsyncTask extends AsyncTask<AlarmClockEntity, Void, Void> {
+    private static class LoadFromDbByIdAsyncTask extends AsyncTask<Long, Void, LiveData<AlarmClockEntity>> {
+        @Override
+        protected LiveData<AlarmClockEntity> doInBackground(Long... ids) {
+            return dao.getById(ids[0]);
+        }
 
         @Override
-        protected Void doInBackground(AlarmClockEntity... alarmClockEntities) {
-            dao.insertAll(alarmClockEntities);
-            return null;
+        protected void onPostExecute(LiveData<AlarmClockEntity> alarmData) {
+            result.addSource(alarmData, alarmClockEntity -> resultById.setValue(alarmClockEntity));
+        }
+    }
+
+    private static class CreateAlarmAsyncTask extends AsyncTask<AlarmClockEntity, Void, Long[]> {
+
+        @Override
+        protected Long[] doInBackground(AlarmClockEntity... alarmClockEntities) {
+            return dao.insertAll(alarmClockEntities);
+        }
+
+        @Override
+        protected void onPostExecute(Long[] ids) {
+            //resultCreate.addSource(ids, id -> resultCreate.postValue(id));
+            resultCreate.postValue(ids[0]);
+            //resultCreate.setValue(ids);
         }
     }
 

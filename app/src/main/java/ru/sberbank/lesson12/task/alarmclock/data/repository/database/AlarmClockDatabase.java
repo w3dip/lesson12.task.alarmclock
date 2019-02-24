@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 import ru.sberbank.lesson12.task.alarmclock.data.entity.AlarmClockEntity;
 import ru.sberbank.lesson12.task.alarmclock.data.repository.dao.AlarmClockDao;
 
-@Database(entities = {AlarmClockEntity.class}, version = 3, exportSchema = false)
+@Database(entities = {AlarmClockEntity.class}, version = 4, exportSchema = false)
 public abstract class AlarmClockDatabase extends RoomDatabase {
     public abstract AlarmClockDao alarmClockDao();
 
