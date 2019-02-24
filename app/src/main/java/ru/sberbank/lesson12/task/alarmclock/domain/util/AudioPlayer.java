@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.media.MediaPlayer;
 
+import androidx.core.app.NotificationManagerCompat;
+
 public class AudioPlayer {
 
     private MediaPlayer mediaPlayer;
@@ -32,6 +34,7 @@ public class AudioPlayer {
                 } else {
                     stop();
                     ((Activity) context).finish();
+                    NotificationManagerCompat.from(context.getApplicationContext()).cancel(1);
                 }
             }
         });

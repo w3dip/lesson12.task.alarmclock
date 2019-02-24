@@ -1,5 +1,7 @@
 package ru.sberbank.lesson12.task.alarmclock.data.entity;
 
+import java.util.Date;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -20,9 +22,11 @@ public class AlarmClockEntity {
     @NonNull
     private Long id;
     private String time;
+    private Date date;
 
-    public AlarmClockEntity(@NonNull Long id, String time) {
+    public AlarmClockEntity(@NonNull Long id, String time, Date date) {
         this.id = id;
         this.time = time;
+        this.date = date;
     }
 }

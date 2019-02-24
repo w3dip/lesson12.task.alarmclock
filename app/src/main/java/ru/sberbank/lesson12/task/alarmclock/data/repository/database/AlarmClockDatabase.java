@@ -5,10 +5,13 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import ru.sberbank.lesson12.task.alarmclock.data.entity.AlarmClockEntity;
+import ru.sberbank.lesson12.task.alarmclock.data.repository.converters.DateTypeConverter;
 import ru.sberbank.lesson12.task.alarmclock.data.repository.dao.AlarmClockDao;
 
 @Database(entities = {AlarmClockEntity.class}, version = 3, exportSchema = false)
+@TypeConverters({DateTypeConverter.class})
 public abstract class AlarmClockDatabase extends RoomDatabase {
     public abstract AlarmClockDao alarmClockDao();
 

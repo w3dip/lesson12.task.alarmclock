@@ -28,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.create_alarm_clock)
     FloatingActionButton createAlarmClockBtn;
 
+    private AlarmClockViewModel viewModel;
+    private AlarmClockAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,18 +45,45 @@ public class MainActivity extends AppCompatActivity {
             new TimePickerFragment().show(getSupportFragmentManager(), ALARM_CLOCK_TAG);
         });
 
-        AlarmClockViewModel viewModel = ViewModelProviders.of(this).get(AlarmClockViewModel.class);
-        AlarmClockAdapter adapter = new AlarmClockAdapter(this);
+        viewModel = ViewModelProviders.of(this).get(AlarmClockViewModel.class);
+        adapter = new AlarmClockAdapter(this);
         viewModel.getClocks().observe(this, alarmClockItems -> {
             adapter.setClocks(alarmClockItems);
             recyclerAlarmClocks.setAdapter(adapter);
             recyclerAlarmClocks.setLayoutManager(new LinearLayoutManager(this));
 
-            if (savedInstanceState == null) {
+            //WorkManager.getInstance().cancelUniqueWork(NOTIFICATION_WORK_TAG);
+            //WorkManager.getInstance().cancelAllWork();
+            /*if (savedInstanceState == null) {
                 for (AlarmClockItem item : alarmClockItems) {
-                    shedule(item);
+                    viewModel.resheduleAlarmClock(item);
                 }
+            }*/
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        /*viewModel.getClocks().observe(this, alarmClockItems -> {
+            adapter.setClocks(alarmClockItems);
+            recyclerAlarmClocks.setAdapter(adapter);
+            recyclerAlarmClocks.setLayoutManager(new LinearLayoutManager(this));
+
+            //WorkManager.getInstance().cancelUniqueWork(NOTIFICATION_WORK_TAG);
+            WorkManager.getInstance().cancelAllWork();
+            //if (savedInstanceState == null) {
+                for (AlarmClockItem item : alarmClockItems) {
+                    viewModel.resheduleAlarmClock(item);
+                }
+            //}
+        });*/
+        super.onResume();
+        WorkManager.getInstance().cancelAllWork();
+        viewModel.getClocks().observe(this, alarmClockItems -> {
+            for (AlarmClockItem item : alarmClockItems) {
+                viewModel.resheduleAlarmClock(item);
             }
         });
+        //WorkManager.getInstance().cancelAllWork();
     }
 }

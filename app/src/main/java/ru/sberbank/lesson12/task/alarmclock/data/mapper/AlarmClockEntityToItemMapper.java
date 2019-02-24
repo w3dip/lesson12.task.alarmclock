@@ -19,6 +19,7 @@ public class AlarmClockEntityToItemMapper implements Mapper<List<AlarmClockEntit
                 .transform(entity -> AlarmClockItem.builder()
                         .id(entity.getId())
                         .time(entity.getTime())
+                        .date(entity.getDate())
                         .build())
                 .toList();
 

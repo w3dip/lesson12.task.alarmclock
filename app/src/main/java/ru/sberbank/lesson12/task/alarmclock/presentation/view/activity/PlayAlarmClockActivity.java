@@ -6,12 +6,21 @@ import android.view.MotionEvent;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
+import androidx.work.WorkManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.sberbank.lesson12.task.alarmclock.R;
+import ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem;
 import ru.sberbank.lesson12.task.alarmclock.domain.util.AudioPlayer;
+import ru.sberbank.lesson12.task.alarmclock.presentation.viewmodel.AlarmClockViewModel;
+
+import static ru.sberbank.lesson12.task.alarmclock.domain.interactor.usecase.CreateAlarmClockInteractor.NOTIFICATION_WORK_TAG;
+import static ru.sberbank.lesson12.task.alarmclock.domain.util.AlarmClockSheduler.shedule;
 
 public class PlayAlarmClockActivity extends AppCompatActivity {
     @BindView(R.id.clockImageView)
@@ -42,14 +51,27 @@ public class PlayAlarmClockActivity extends AppCompatActivity {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        player.stop();
+        closeAlarmClock();
         finish();
         return true;
     }
 
     @Override
     public void onBackPressed() {
-        player.stop();
+        closeAlarmClock();
         super.onBackPressed();
+    }
+
+    private void closeAlarmClock() {
+        player.stop();
+        NotificationManagerCompat.from(getApplicationContext()).cancel(1);
+        //WorkManager.getInstance().cancelUniqueWork(NOTIFICATION_WORK_TAG);
+        WorkManager.getInstance().cancelAllWork();
+        AlarmClockViewModel viewModel = ViewModelProviders.of(this).get(AlarmClockViewModel.class);
+        viewModel.getClocks().observe(this, alarmClockItems -> {
+            for (AlarmClockItem item : alarmClockItems) {
+                viewModel.resheduleAlarmClock(item);
+            }
+        });
     }
 }

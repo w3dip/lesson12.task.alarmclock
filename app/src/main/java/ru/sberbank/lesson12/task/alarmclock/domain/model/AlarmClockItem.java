@@ -1,6 +1,7 @@
 package ru.sberbank.lesson12.task.alarmclock.domain.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import lombok.Builder;
 import lombok.Data;
@@ -13,4 +14,5 @@ public class AlarmClockItem implements Serializable {
 
     private Long id;
     private String time;
+    private Date date;
 }

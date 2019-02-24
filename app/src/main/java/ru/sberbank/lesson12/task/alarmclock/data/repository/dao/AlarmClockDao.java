@@ -15,7 +15,7 @@ import static ru.sberbank.lesson12.task.alarmclock.data.entity.AlarmClockEntity.
 @Dao
 public interface AlarmClockDao {
 
-    @Query("SELECT * FROM " + TABLE_NAME)
+    @Query("SELECT * FROM " + TABLE_NAME + " ORDER BY date DESC")
     LiveData<List<AlarmClockEntity>> getAll();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
