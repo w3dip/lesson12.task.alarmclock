@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 import butterknife.BindView;
@@ -42,14 +43,19 @@ public class PlayAlarmClockActivity extends AppCompatActivity {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        player.stop();
+        closeAlarmClock();
         finish();
         return true;
     }
 
     @Override
     public void onBackPressed() {
-        player.stop();
+        closeAlarmClock();
         super.onBackPressed();
+    }
+
+    private void closeAlarmClock() {
+        player.stop();
+        NotificationManagerCompat.from(getApplicationContext()).cancel(1);
     }
 }
