@@ -5,16 +5,16 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.support.DaggerAppCompatActivity;
 import ru.sberbank.lesson12.task.alarmclock.R;
 import ru.sberbank.lesson12.task.alarmclock.domain.util.AudioPlayer;
 
-public class PlayAlarmClockActivity extends AppCompatActivity {
+public class PlayAlarmClockActivity extends DaggerAppCompatActivity {
     @BindView(R.id.clockImageView)
     ImageView clockImageView;
 
@@ -30,7 +30,7 @@ public class PlayAlarmClockActivity extends AppCompatActivity {
         animatedVectorDrawable.registerAnimationCallback(new Animatable2Compat.AnimationCallback() {
             @Override
             public void onAnimationEnd(Drawable drawable) {
-                clockImageView.post(() -> animatedVectorDrawable.start());
+                clockImageView.post(animatedVectorDrawable::start);
             }
         });
         animatedVectorDrawable.start();

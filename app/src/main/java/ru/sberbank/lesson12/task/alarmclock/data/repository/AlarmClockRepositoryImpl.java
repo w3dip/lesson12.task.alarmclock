@@ -4,6 +4,9 @@ import android.os.AsyncTask;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Transformations;
@@ -15,6 +18,7 @@ import ru.sberbank.lesson12.task.alarmclock.domain.mapper.Mapper;
 import ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem;
 import ru.sberbank.lesson12.task.alarmclock.domain.repository.AlarmClockRepository;
 
+@Singleton
 public class AlarmClockRepositoryImpl implements AlarmClockRepository {
     private static Mapper<List<AlarmClockEntity>, List<AlarmClockItem>> alarmClockEntityToItemMapper = new AlarmClockEntityToItemMapper();
     private static Mapper<AlarmClockItem, AlarmClockEntity> alarmClockItemToEntityMapper = new AlarmClockItemToEntityMapper();
@@ -23,6 +27,7 @@ public class AlarmClockRepositoryImpl implements AlarmClockRepository {
 
     private static final MediatorLiveData<List<AlarmClockEntity>> result = new MediatorLiveData<>();
 
+    @Inject
     public AlarmClockRepositoryImpl(AlarmClockDao dao) {
         AlarmClockRepositoryImpl.dao = dao;
     }
