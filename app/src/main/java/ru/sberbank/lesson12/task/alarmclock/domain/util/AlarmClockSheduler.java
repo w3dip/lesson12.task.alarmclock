@@ -11,7 +11,7 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 import ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem;
 
-import static ru.sberbank.lesson12.task.alarmclock.domain.interactor.usecase.CreateAlarmClockInteractor.NOTIFICATION_WORK_TAG;
+import static ru.sberbank.lesson12.task.alarmclock.domain.interactor.impl.CreateAlarmClockInteractor.NOTIFICATION_WORK_TAG;
 
 public class AlarmClockSheduler {
     public static void shedule(AlarmClockItem item) {
@@ -19,7 +19,6 @@ public class AlarmClockSheduler {
                 .setInitialDelay(calculateDelay(item.getTime()), TimeUnit.MILLISECONDS)
                 .addTag(NOTIFICATION_WORK_TAG)
                 .build();
-        //WorkManager.getInstance().beginUniqueWork(NOTIFICATION_WORK_TAG, ExistingWorkPolicy.REPLACE, notificationWork).enqueue();
         WorkManager.getInstance().enqueue(notificationWork);
     }
 

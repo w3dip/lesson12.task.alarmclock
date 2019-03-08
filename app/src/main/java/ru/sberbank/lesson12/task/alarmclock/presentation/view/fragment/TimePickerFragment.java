@@ -16,7 +16,7 @@ import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import dagger.android.support.DaggerDialogFragment;
-import ru.sberbank.lesson12.task.alarmclock.domain.interactor.usecase.CreateAlarmClockInteractor;
+import ru.sberbank.lesson12.task.alarmclock.domain.interactor.impl.CreateAlarmClockInteractor;
 import ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem;
 
 import static java.util.Calendar.HOUR_OF_DAY;
@@ -38,14 +38,12 @@ public class TimePickerFragment extends DaggerDialogFragment implements TimePick
             value = (AlarmClockItem)args.getSerializable(ALARM_CLOCK_ITEM);
             if (value != null) {
                 LocalTime time = formatter.parseDateTime(value.getTime()).toLocalTime();
-                return new TimePickerDialog(getActivity(), this, time.getHourOfDay(), time.getMinuteOfHour(),
-                        DateFormat.is24HourFormat(getActivity()));
+                return showTimePicker(time.getHourOfDay(), time.getMinuteOfHour());
             }
 
         }
         final Calendar c = Calendar.getInstance();
-        return new TimePickerDialog(getActivity(), this, c.get(HOUR_OF_DAY), c.get(MINUTE),
-                DateFormat.is24HourFormat(getActivity()));
+        return showTimePicker(c.get(HOUR_OF_DAY), c.get(MINUTE));
     }
 
     @Override
@@ -56,5 +54,10 @@ public class TimePickerFragment extends DaggerDialogFragment implements TimePick
         value.setTime(formatter.print(c.getTimeInMillis()));
         interactor.setItem(value);
         interactor.execute();
+    }
+
+    private Dialog showTimePicker(int hourOfDay, int minute) {
+        return new TimePickerDialog(getActivity(), this, hourOfDay, minute,
+                DateFormat.is24HourFormat(getActivity()));
     }
 }

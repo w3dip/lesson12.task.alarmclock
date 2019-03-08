@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import dagger.android.support.DaggerDialogFragment;
 import ru.sberbank.lesson12.task.alarmclock.R;
-import ru.sberbank.lesson12.task.alarmclock.domain.interactor.usecase.DeleteAlarmClockInteractor;
+import ru.sberbank.lesson12.task.alarmclock.domain.interactor.impl.DeleteAlarmClockInteractor;
 import ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem;
 
 import static android.content.DialogInterface.BUTTON_NEGATIVE;
@@ -28,7 +28,7 @@ public class DeleteAlarmClockFragment extends DaggerDialogFragment {
         dialog.setCancelable(false);
         dialog.setTitle(R.string.alarm_clock_delete_title);
         dialog.setMessage(getResources().getString(R.string.alarm_clock_delete_message));
-        dialog.setButton(BUTTON_POSITIVE, "OK", (alertDialog, which) -> {
+        dialog.setButton(BUTTON_POSITIVE, getResources().getString(R.string.alarm_clock_delete_ok), (alertDialog, which) -> {
             Bundle args = getArguments();
             if (args != null ) {
                 AlarmClockItem value = (AlarmClockItem)args.getSerializable(ALARM_CLOCK_ITEM);
@@ -40,7 +40,7 @@ public class DeleteAlarmClockFragment extends DaggerDialogFragment {
 
             }
         });
-        dialog.setButton(BUTTON_NEGATIVE, "Cancel", (alertDialog, which) -> {
+        dialog.setButton(BUTTON_NEGATIVE, getResources().getString(R.string.alarm_clock_delete_cancel), (alertDialog, which) -> {
             alertDialog.dismiss();
         });
         return dialog;

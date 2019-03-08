@@ -31,3 +31,13 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    butterknifeVersion = '9.0.0-rc2'
+    lombokVersion = '1.18.4'
+    roomVersion = '2.1.0-alpha04'
+    daggerVersion = '2.21'
+    platformVersion = '1.0.0'
+    rxJavaVerson = '2.0.1'
+    lifecycleVerson = '2.0.0'
+}

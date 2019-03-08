@@ -29,40 +29,44 @@ android {
 dependencies {
     api 'com.google.guava:guava:27.0.1-android'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation "androidx.appcompat:appcompat:$platformVersion"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "androidx.recyclerview:recyclerview:$platformVersion"
+    implementation "androidx.legacy:legacy-support-v4:$platformVersion"
+    //Material Design
+    implementation "com.google.android.material:material:$platformVersion"
 
     //Butter Knife
-    implementation 'com.jakewharton:butterknife:9.0.0-rc2'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-rc2'
+    implementation "com.jakewharton:butterknife:$butterknifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeVersion"
 
     //Lombok
-    compileOnly 'org.projectlombok:lombok:1.18.4'
-    annotationProcessor 'org.projectlombok:lombok:1.18.4'
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
     //Room
-    implementation "androidx.room:room-runtime:2.0.0-rc01"
-    annotationProcessor "androidx.room:room-compiler:2.0.0-rc01"
+    implementation "androidx.room:room-runtime:$roomVersion"
+    implementation "androidx.room:room-rxjava2:$roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVerson"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycleVerson"
+    implementation "androidx.lifecycle:lifecycle-reactivestreams:$lifecycleVerson"
 
-    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0-rc01"
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.0.0-rc01"
+    //RxJava 2
+    implementation "io.reactivex.rxjava2:rxandroid:$rxJavaVerson"
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVerson"
 
     //Joda Time
     implementation 'joda-time:joda-time:2.10.1'
-
-    //Material Design
-    implementation 'com.google.android.material:material:1.0.0'
 
     //Work Manager
     implementation "android.arch.work:work-runtime:1.0.0-rc01"
 
     //Dagger 2
-    implementation 'com.google.dagger:dagger:2.21'
-    implementation 'com.google.dagger:dagger-android-support:2.21'
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.21'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.21'
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
 
     //tests
     testImplementation 'junit:junit:4.12'

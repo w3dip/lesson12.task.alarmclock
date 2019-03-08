@@ -1,26 +1,15 @@
 package ru.sberbank.lesson12.task.alarmclock.data.mapper;
 
-import com.google.common.collect.FluentIterable;
-
-import java.util.Collections;
-import java.util.List;
-
 import ru.sberbank.lesson12.task.alarmclock.data.entity.AlarmClockEntity;
 import ru.sberbank.lesson12.task.alarmclock.domain.mapper.Mapper;
 import ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem;
 
-public class AlarmClockEntityToItemMapper implements Mapper<List<AlarmClockEntity>, List<AlarmClockItem>> {
+public class AlarmClockEntityToItemMapper implements Mapper<AlarmClockEntity, AlarmClockItem> {
     @Override
-    public List<AlarmClockItem> map(List<AlarmClockEntity> source) {
-        if (source == null || source.isEmpty()) {
-            return Collections.emptyList();
-        }
-        return FluentIterable.from(source)
-                .transform(entity -> AlarmClockItem.builder()
-                        .id(entity.getId())
-                        .time(entity.getTime())
-                        .build())
-                .toList();
-
+    public AlarmClockItem map(AlarmClockEntity from) {
+        return AlarmClockItem.builder()
+                .id(from.getId())
+                .time(from.getTime())
+                .build();
     }
 }

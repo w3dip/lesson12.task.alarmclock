@@ -2,11 +2,12 @@ package ru.sberbank.lesson12.task.alarmclock.domain.repository;
 
 import java.util.List;
 
-import androidx.lifecycle.LiveData;
+import io.reactivex.Flowable;
+import io.reactivex.Single;
 import ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem;
 
 public interface AlarmClockRepository {
-    LiveData<List<AlarmClockItem>> getAll();
-    void create(AlarmClockItem item);
-    void delete(AlarmClockItem item);
+    Flowable<List<AlarmClockItem>> getAll();
+    Single<List<Long>> create(AlarmClockItem item);
+    Single<Integer> delete(AlarmClockItem item);
 }

@@ -14,13 +14,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.DaggerAppCompatActivity;
 import ru.sberbank.lesson12.task.alarmclock.R;
+import ru.sberbank.lesson12.task.alarmclock.di.util.ViewModelFactory;
 import ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem;
 import ru.sberbank.lesson12.task.alarmclock.presentation.view.adapter.AlarmClockAdapter;
 import ru.sberbank.lesson12.task.alarmclock.presentation.view.fragment.TimePickerFragment;
 import ru.sberbank.lesson12.task.alarmclock.presentation.viewmodel.AlarmClockViewModel;
-import ru.sberbank.lesson12.task.alarmclock.di.util.ViewModelFactory;
 
-import static ru.sberbank.lesson12.task.alarmclock.domain.interactor.usecase.CreateAlarmClockInteractor.NOTIFICATION_WORK_TAG;
+import static ru.sberbank.lesson12.task.alarmclock.domain.interactor.impl.CreateAlarmClockInteractor.NOTIFICATION_WORK_TAG;
 import static ru.sberbank.lesson12.task.alarmclock.domain.model.AlarmClockItem.ALARM_CLOCK_TAG;
 import static ru.sberbank.lesson12.task.alarmclock.domain.util.AlarmClockSheduler.shedule;
 
@@ -44,9 +44,7 @@ public class MainActivity extends DaggerAppCompatActivity {
             WorkManager.getInstance().cancelAllWorkByTag(NOTIFICATION_WORK_TAG);
         }
 
-        createAlarmClockBtn.setOnClickListener(v -> {
-            new TimePickerFragment().show(getSupportFragmentManager(), ALARM_CLOCK_TAG);
-        });
+        createAlarmClockBtn.setOnClickListener(v -> new TimePickerFragment().show(getSupportFragmentManager(), ALARM_CLOCK_TAG));
 
         AlarmClockViewModel viewModel = ViewModelProviders.of(this, viewModelFactory).get(AlarmClockViewModel.class);
         AlarmClockAdapter adapter = new AlarmClockAdapter(this);
